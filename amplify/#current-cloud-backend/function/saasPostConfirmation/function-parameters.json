@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "storage": {
+      "MySubscription:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ],
+      "Profile:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

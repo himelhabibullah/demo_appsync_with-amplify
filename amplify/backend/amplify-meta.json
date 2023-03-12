@@ -1,0 +1,180 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify4195b0d128684-staging-22335-authRole",
+      "UnauthRoleArn": "arn:aws:iam::445700777211:role/amplify-amplify4195b0d128684-staging-22335-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::445700777211:role/amplify-amplify4195b0d128684-staging-22335-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-amplify4195b0d128684-staging-22335-deployment",
+      "UnauthRoleName": "amplify-amplify4195b0d128684-staging-22335-unauthRole",
+      "StackName": "amplify-amplify4195b0d128684-staging-22335",
+      "StackId": "arn:aws:cloudformation:eu-west-1:445700777211:stack/amplify-amplify4195b0d128684-staging-22335/f0990920-15f7-11ed-8e28-024562c51381",
+      "AmplifyAppId": "d39ty7b2541yzy"
+    }
+  },
+  "auth": {
+    "saasstart": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "eu-west-1_XlZxTL0TV",
+        "AppClientIDWeb": "13ccagfj2c58d3g5kk7pvg94o7",
+        "AppClientID": "7uh9v4m2equ2nmdbamceun3tme",
+        "IdentityPoolId": "eu-west-1:5cc6f08e-3bf8-4189-a059-61ee8dfeb915",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-west-1:445700777211:userpool/eu-west-1_XlZxTL0TV",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "saasstart"
+      },
+      "lastPushTimeStamp": "2022-08-25T16:06:16.609Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify4195b0d128684-staging-22335-deployment/amplify-cfn-templates/auth/saasstart-cloudformation-template.json",
+        "logicalId": "authsaasstart"
+      },
+      "lastPushDirHash": "MXqLoKBjGr4kdBL9RSU5i5OV9I0="
+    }
+  },
+  "api": {
+    "saasstart": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "saasstart",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authsaasstart"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 30,
+                "description": "api key description"
+              }
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "d7vew4cbhvb7xbo5mk6drenbwe",
+        "GraphQLAPIEndpointOutput": "https://5vvuvfti5ng5fkwwyhyo3emuqu.appsync-api.eu-west-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-m4qxtx6khjdcxmbm5lbt5o6efq"
+      },
+      "lastPushTimeStamp": "2022-08-25T16:07:05.417Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify4195b0d128684-staging-22335-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apisaasstart"
+      },
+      "lastPushDirHash": "QwPRHGJd+CFWLjquKzGNCUCYysE="
+    }
+  },
+  "function": {
+    "saasPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "saasstart",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ],
+      "output": {
+        "Region": "eu-west-1",
+        "Arn": "arn:aws:lambda:eu-west-1:445700777211:function:saasPostConfirmation-staging",
+        "Name": "saasPostConfirmation-staging",
+        "LambdaExecutionRole": "saasstartLambdaRoleb3ad33e5-staging"
+      },
+      "lastPushTimeStamp": "2022-08-25T16:06:16.634Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify4195b0d128684-staging-22335-deployment/amplify-cfn-templates/function/saasPostConfirmation-cloudformation-template.json",
+        "logicalId": "functionsaasPostConfirmation"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-amplify4195b0d128684-staging-22335-deployment",
+        "s3Key": "amplify-builds/saasPostConfirmation-6c4132687465506d3147-build.zip"
+      },
+      "lastBuildTimeStamp": "2022-08-23T21:00:10.521Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-08-23T21:00:10.630Z",
+      "distZipFilename": "saasPostConfirmation-6c4132687465506d3147-build.zip",
+      "lastPushDirHash": "CnJ6bDk4b4TYJukA/AIc7uYVlog="
+    },
+    "saasUpdateSubscription": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "saasstart",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2022-08-25T16:06:32.379Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-08-25T16:06:32.418Z",
+      "distZipFilename": "saasUpdateSubscription-2b30444a5447557a3447-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-amplify4195b0d128684-staging-22335-deployment",
+        "s3Key": "amplify-builds/saasUpdateSubscription-2b30444a5447557a3447-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify4195b0d128684-staging-22335-deployment/amplify-cfn-templates/function/saasUpdateSubscription-cloudformation-template.json",
+        "logicalId": "functionsaasUpdateSubscription"
+      },
+      "lastPushTimeStamp": "2022-08-25T16:07:05.235Z",
+      "output": {
+        "Region": "eu-west-1",
+        "CloudWatchEventRule": "amplify-amplify4195b0d128684-stagi-CloudWatchEvent-1RVQB6JLRPJWP",
+        "Arn": "arn:aws:lambda:eu-west-1:445700777211:function:saasUpdateSubscription-staging",
+        "Name": "saasUpdateSubscription-staging",
+        "LambdaExecutionRole": "saasstartLambdaRole62992a65-staging"
+      },
+      "lastPushDirHash": "wGLZdGk4X+1R3Pkx/aDwlGe/z5k="
+    }
+  }
+}

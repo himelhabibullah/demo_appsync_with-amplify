@@ -1,0 +1,487 @@
+
+type MySubscription @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  owner: ID
+  subcription_name: String
+  api_key: String
+  credit: Int
+  lastUpdateDate: AWSDateTime
+  creation_date: AWSDateTime
+  credit_to_ad_each_month: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Profile @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  owner: ID
+  fullName: String
+  address: String
+  phone: String
+  subcriptionID: ID
+  MySubscription: MySubscription
+  email: String
+  country: String
+  state: String
+  city: String
+  zipCode: String
+  about: String
+  creditHistory(createdAt: ModelStringKeyConditionInput, filter: ModelCreditHistoryFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCreditHistoryConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type CreditHistory @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  profileID: ID!
+  request: AWSJSON
+  usedCredit: Int
+  response: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelMySubscriptionConnection @aws_iam @aws_cognito_user_pools {
+  items: [MySubscription]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelMySubscriptionFilterInput {
+  id: ModelIDInput
+  owner: ModelIDInput
+  subcription_name: ModelStringInput
+  api_key: ModelStringInput
+  credit: ModelIntInput
+  lastUpdateDate: ModelStringInput
+  creation_date: ModelStringInput
+  credit_to_ad_each_month: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMySubscriptionFilterInput]
+  or: [ModelMySubscriptionFilterInput]
+  not: ModelMySubscriptionFilterInput
+}
+
+type Query {
+  getMySubscription(id: ID!): MySubscription @aws_iam @aws_cognito_user_pools
+  listMySubscriptions(filter: ModelMySubscriptionFilterInput, limit: Int, nextToken: String): ModelMySubscriptionConnection @aws_iam @aws_cognito_user_pools
+  syncMySubscriptions(filter: ModelMySubscriptionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelMySubscriptionConnection @aws_iam @aws_cognito_user_pools
+  byOwnerMySubscription(owner: ID!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelMySubscriptionFilterInput, limit: Int, nextToken: String): ModelMySubscriptionConnection @aws_iam @aws_cognito_user_pools
+  getProfile(id: ID!): Profile @aws_iam @aws_cognito_user_pools
+  listProfiles(filter: ModelProfileFilterInput, limit: Int, nextToken: String): ModelProfileConnection @aws_iam @aws_cognito_user_pools
+  syncProfiles(filter: ModelProfileFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelProfileConnection @aws_iam @aws_cognito_user_pools
+  getCreditHistory(id: ID!): CreditHistory @aws_iam @aws_cognito_user_pools
+  listCreditHistories(filter: ModelCreditHistoryFilterInput, limit: Int, nextToken: String): ModelCreditHistoryConnection @aws_iam @aws_cognito_user_pools
+  syncCreditHistories(filter: ModelCreditHistoryFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCreditHistoryConnection @aws_iam @aws_cognito_user_pools
+  byProfileIDCreditHistory(profileID: ID!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelCreditHistoryFilterInput, limit: Int, nextToken: String): ModelCreditHistoryConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelMySubscriptionConditionInput {
+  owner: ModelIDInput
+  subcription_name: ModelStringInput
+  api_key: ModelStringInput
+  credit: ModelIntInput
+  lastUpdateDate: ModelStringInput
+  creation_date: ModelStringInput
+  credit_to_ad_each_month: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMySubscriptionConditionInput]
+  or: [ModelMySubscriptionConditionInput]
+  not: ModelMySubscriptionConditionInput
+}
+
+input CreateMySubscriptionInput {
+  id: ID
+  owner: ID
+  subcription_name: String
+  api_key: String
+  credit: Int
+  lastUpdateDate: AWSDateTime
+  creation_date: AWSDateTime
+  credit_to_ad_each_month: String
+  createdAt: AWSDateTime
+  _version: Int
+}
+
+input UpdateMySubscriptionInput {
+  id: ID!
+  owner: ID
+  subcription_name: String
+  api_key: String
+  credit: Int
+  lastUpdateDate: AWSDateTime
+  creation_date: AWSDateTime
+  credit_to_ad_each_month: String
+  createdAt: AWSDateTime
+  _version: Int
+}
+
+input DeleteMySubscriptionInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createMySubscription(input: CreateMySubscriptionInput!, condition: ModelMySubscriptionConditionInput): MySubscription @aws_iam @aws_cognito_user_pools
+  updateMySubscription(input: UpdateMySubscriptionInput!, condition: ModelMySubscriptionConditionInput): MySubscription @aws_iam @aws_cognito_user_pools
+  deleteMySubscription(input: DeleteMySubscriptionInput!, condition: ModelMySubscriptionConditionInput): MySubscription @aws_iam @aws_cognito_user_pools
+  createProfile(input: CreateProfileInput!, condition: ModelProfileConditionInput): Profile @aws_iam @aws_cognito_user_pools
+  updateProfile(input: UpdateProfileInput!, condition: ModelProfileConditionInput): Profile @aws_iam @aws_cognito_user_pools
+  deleteProfile(input: DeleteProfileInput!, condition: ModelProfileConditionInput): Profile @aws_iam @aws_cognito_user_pools
+  createCreditHistory(input: CreateCreditHistoryInput!, condition: ModelCreditHistoryConditionInput): CreditHistory @aws_iam @aws_cognito_user_pools
+  updateCreditHistory(input: UpdateCreditHistoryInput!, condition: ModelCreditHistoryConditionInput): CreditHistory @aws_iam @aws_cognito_user_pools
+  deleteCreditHistory(input: DeleteCreditHistoryInput!, condition: ModelCreditHistoryConditionInput): CreditHistory @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionMySubscriptionFilterInput {
+  id: ModelSubscriptionIDInput
+  subcription_name: ModelSubscriptionStringInput
+  api_key: ModelSubscriptionStringInput
+  credit: ModelSubscriptionIntInput
+  lastUpdateDate: ModelSubscriptionStringInput
+  creation_date: ModelSubscriptionStringInput
+  credit_to_ad_each_month: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMySubscriptionFilterInput]
+  or: [ModelSubscriptionMySubscriptionFilterInput]
+}
+
+type Subscription {
+  onCreateMySubscription(owner: String): MySubscription @aws_subscribe(mutations: ["createMySubscription"]) @aws_iam @aws_cognito_user_pools
+  onUpdateMySubscription(owner: String): MySubscription @aws_subscribe(mutations: ["updateMySubscription"]) @aws_iam @aws_cognito_user_pools
+  onDeleteMySubscription(owner: String): MySubscription @aws_subscribe(mutations: ["deleteMySubscription"]) @aws_iam @aws_cognito_user_pools
+  onCreateProfile(owner: String): Profile @aws_subscribe(mutations: ["createProfile"]) @aws_iam @aws_cognito_user_pools
+  onUpdateProfile(owner: String): Profile @aws_subscribe(mutations: ["updateProfile"]) @aws_iam @aws_cognito_user_pools
+  onDeleteProfile(owner: String): Profile @aws_subscribe(mutations: ["deleteProfile"]) @aws_iam @aws_cognito_user_pools
+  onCreateCreditHistory(profileID: String): CreditHistory @aws_subscribe(mutations: ["createCreditHistory"]) @aws_iam @aws_cognito_user_pools
+  onUpdateCreditHistory(profileID: String): CreditHistory @aws_subscribe(mutations: ["updateCreditHistory"]) @aws_iam @aws_cognito_user_pools
+  onDeleteCreditHistory(profileID: String): CreditHistory @aws_subscribe(mutations: ["deleteCreditHistory"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelProfileConnection @aws_iam @aws_cognito_user_pools {
+  items: [Profile]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelProfileFilterInput {
+  id: ModelIDInput
+  owner: ModelIDInput
+  fullName: ModelStringInput
+  address: ModelStringInput
+  phone: ModelStringInput
+  subcriptionID: ModelIDInput
+  email: ModelStringInput
+  country: ModelStringInput
+  state: ModelStringInput
+  city: ModelStringInput
+  zipCode: ModelStringInput
+  about: ModelStringInput
+  and: [ModelProfileFilterInput]
+  or: [ModelProfileFilterInput]
+  not: ModelProfileFilterInput
+}
+
+input ModelProfileConditionInput {
+  owner: ModelIDInput
+  fullName: ModelStringInput
+  address: ModelStringInput
+  phone: ModelStringInput
+  subcriptionID: ModelIDInput
+  email: ModelStringInput
+  country: ModelStringInput
+  state: ModelStringInput
+  city: ModelStringInput
+  zipCode: ModelStringInput
+  about: ModelStringInput
+  and: [ModelProfileConditionInput]
+  or: [ModelProfileConditionInput]
+  not: ModelProfileConditionInput
+}
+
+input CreateProfileInput {
+  id: ID
+  owner: ID
+  fullName: String
+  address: String
+  phone: String
+  subcriptionID: ID
+  email: String
+  country: String
+  state: String
+  city: String
+  zipCode: String
+  about: String
+  _version: Int
+}
+
+input UpdateProfileInput {
+  id: ID!
+  owner: ID
+  fullName: String
+  address: String
+  phone: String
+  subcriptionID: ID
+  email: String
+  country: String
+  state: String
+  city: String
+  zipCode: String
+  about: String
+  _version: Int
+}
+
+input DeleteProfileInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionProfileFilterInput {
+  id: ModelSubscriptionIDInput
+  fullName: ModelSubscriptionStringInput
+  address: ModelSubscriptionStringInput
+  phone: ModelSubscriptionStringInput
+  subcriptionID: ModelSubscriptionIDInput
+  email: ModelSubscriptionStringInput
+  country: ModelSubscriptionStringInput
+  state: ModelSubscriptionStringInput
+  city: ModelSubscriptionStringInput
+  zipCode: ModelSubscriptionStringInput
+  about: ModelSubscriptionStringInput
+  and: [ModelSubscriptionProfileFilterInput]
+  or: [ModelSubscriptionProfileFilterInput]
+}
+
+type ModelCreditHistoryConnection @aws_iam @aws_cognito_user_pools {
+  items: [CreditHistory]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCreditHistoryFilterInput {
+  id: ModelIDInput
+  profileID: ModelIDInput
+  request: ModelStringInput
+  usedCredit: ModelIntInput
+  response: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelCreditHistoryFilterInput]
+  or: [ModelCreditHistoryFilterInput]
+  not: ModelCreditHistoryFilterInput
+}
+
+input ModelCreditHistoryConditionInput {
+  profileID: ModelIDInput
+  request: ModelStringInput
+  usedCredit: ModelIntInput
+  response: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelCreditHistoryConditionInput]
+  or: [ModelCreditHistoryConditionInput]
+  not: ModelCreditHistoryConditionInput
+}
+
+input CreateCreditHistoryInput {
+  id: ID
+  profileID: ID!
+  request: AWSJSON
+  usedCredit: Int
+  response: String
+  createdAt: AWSDateTime
+  _version: Int
+}
+
+input UpdateCreditHistoryInput {
+  id: ID!
+  profileID: ID
+  request: AWSJSON
+  usedCredit: Int
+  response: String
+  createdAt: AWSDateTime
+  _version: Int
+}
+
+input DeleteCreditHistoryInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionCreditHistoryFilterInput {
+  id: ModelSubscriptionIDInput
+  request: ModelSubscriptionStringInput
+  usedCredit: ModelSubscriptionIntInput
+  response: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionCreditHistoryFilterInput]
+  or: [ModelSubscriptionCreditHistoryFilterInput]
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
+

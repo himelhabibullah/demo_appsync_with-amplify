@@ -1,0 +1,39 @@
+type MySubscription @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [read]}]) {
+  id: ID!
+  owner:ID
+  subcription_name: String
+  api_key: String
+  credit: Int
+  creation_date: AWSDateTime
+  credit_to_ad_each_month: String
+}
+
+type Profile @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [read, create, update, delete]}, {allow: private, operations: [read]}]) {
+  id: ID!
+  owner: ID
+  fullName: String
+  address: String
+  phone: String
+  subcriptionID:ID
+  MySubscription: MySubscription @hasOne(fields: ["subcriptionID"])
+  email: String
+  country: String
+  state: String
+  city: String
+  zipCode: String
+  about: String
+  creditHistory: [CreditHistory] @hasMany(indexName: "byProfileIDCreditHistory", fields: ["id"])
+
+}
+
+type CreditHistory @model @auth(rules: [{allow: owner, ownerField: "profileID", operations: [read, create, update, delete]}, {allow: private, operations: [read]}]) {
+  id: ID!
+  profileID: ID! @index(name: "byProfileIDCreditHistory", queryField: "byProfileIDCreditHistory", sortKeyFields: ["createdAt"])
+  request: AWSJSON
+  usedCredit: Int
+  response: String
+  createdAt: AWSDateTime
+
+}
+
+ 

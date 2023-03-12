@@ -1,0 +1,19 @@
+{
+    "AppSyncApiName": "saasstart",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authsaasstart",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-amplify4195b0d128684-staging-22335-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/06def29706d24f8d324f919c83ae813f27c51879"
+}

@@ -1,0 +1,24 @@
+{
+  "stackTemplatePathOrUrl": "amplify-appsync-files/1deb263fb064d00593416fa7e7b469ae17dc2e43/states/initial-stack/cloudformation-template.json",
+  "previousMetaKey": "amplify-appsync-files/1deb263fb064d00593416fa7e7b469ae17dc2e43/states/initial-stack/deployment-meta.json",
+  "parameters": {
+    "DynamoDBModelTableReadIOPS": "5",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "authRoleName": "amplify-amplify4195b0d128684-staging-22335-authRole",
+    "unauthRoleName": "amplify-amplify4195b0d128684-staging-22335-unauthRole",
+    "DynamoDBEnablePointInTimeRecovery": "false",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "S3DeploymentBucket": "amplify-amplify4195b0d128684-staging-22335-deployment",
+    "DynamoDBModelTableWriteIOPS": "5",
+    "env": "staging",
+    "S3DeploymentRootKey": "amplify-appsync-files/1deb263fb064d00593416fa7e7b469ae17dc2e43/states/initial-stack",
+    "AppSyncApiName": "saasstart",
+    "AuthCognitoUserPoolId": "eu-west-1_XlZxTL0TV"
+  },
+  "stackName": "arn:aws:cloudformation:eu-west-1:445700777211:stack/amplify-amplify4195b0d128684-staging-22335-apisaasstart-1VX564QSM7QSW/61a56580-1708-11ed-8f79-02801ec2d4c1",
+  "capabilities": [
+    "CAPABILITY_NAMED_IAM",
+    "CAPABILITY_AUTO_EXPAND"
+  ],
+  "tableNames": []
+}
